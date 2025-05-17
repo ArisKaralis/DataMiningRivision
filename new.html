@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Mining Exam Study Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        details > summary {
+            cursor: pointer;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 0.5rem;
+        }
+        details[open] > summary {
+            margin-bottom: 1rem;
+        }
+        .math-formula {
+            overflow-x: auto; /* Allows scrolling for wide formulas */
+            padding: 0.5em 0;
+            margin: 0.5em 0;
+        }
+        /* Mobile menu styles */
+        @media (max-width: 768px) {
+            #sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+            #sidebar.open {
+                transform: translateX(0);
+            }
+        }
+        .exercise-box {
+            border: 1px solid #d1d5db; /* Tailwind gray-300 */
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            background-color: #f9fafb; /* Tailwind gray-50 */
+        }
+         .exercise-box .font-medium { /* Ensure question text is clearly visible */
+            color: #374151; /* Tailwind gray-700 */
+        }
+        .exercise-box ul {
+            color: #4b5563; /* Tailwind gray-600 */
+        }
+        .answer-reveal summary {
+            font-size: 0.875rem; /* text-sm */
+            color: #2563eb; /* Tailwind blue-600 */
+            border-bottom: none; /* remove border for answer summary */
+            margin-bottom: 0.25rem;
+        }
+        .answer-reveal summary:hover {
+            color: #1d4ed8; /* Tailwind blue-800 */
+        }
+        .answer-reveal p {
+            font-size: 0.875rem; /* text-sm */
+            padding: 0.5rem; /* p-2 */
+            background-color: #eff6ff; /* Tailwind blue-50 */
+            border-radius: 0.25rem; /* rounded-sm */
+            color: #374151; /* Tailwind gray-700 */
+        }
+        /* Button to toggle all details */
+        #toggle-all-details {
+            background-color: #4a5568; /* gray-700 */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        #toggle-all-details:hover {
+            background-color: #2d3748; /* gray-800 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="flex h-screen overflow-hidden">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-30 w-72 bg-gray-800 text-white p-6 space-y-3 overflow-y-auto md:relative md:translate-x-0">
+            <h1 class="text-2xl font-semibold border-b border-gray-700 pb-3">Study Guide</h1>
+            <nav class="space-y-2">
+
+                <div>
+                    <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mt-3 mb-1">Zhiwu's Lectures</h2>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lecture1">L1: Recommendation Systems</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lecture2">L2: Clustering</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lecture3">L3: Stats, PCA & SVD</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lecture4">L4: Embedding Data</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lecture5">L5: Search & Rank</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lecture6">L6: Document Filtering</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lecture7">L7: Decision Trees</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lecture8">L8: Nearest Neighbors</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lecture9">L9: Market Basket Analysis</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lecture10">L10: Semantic Spaces (LSA)</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lecture11">L11: Topic Modeling</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lecture12">L12: Outlier Detection</a>
+                </div>
+                 <div>
+                    <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mt-3 mb-1">Shoaib's Lectures</h2>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lectureSLR">Linear Regression</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lectureSLogR">Logistic Regression</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lectureSIT">Information Theory</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lectureSMS">Mining Data Streams</a>
+                </div>
+                <div>
+                    <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mt-3 mb-1">Markus's Lectures</h2>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lectureMLP">Link Prediction</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lectureMCD">Community Detection</a>
+                    <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-700 nav-link" data-target="lectureMPR">PageRank</a>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-6 md:p-10">
+            <button id="menu-button" class="md:hidden fixed top-4 right-4 z-40 bg-gray-800 text-white p-2 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+
+            <button id="toggle-all-details">Toggle All Details</button>
+
+
+            <div id="lecture1" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Lecture 1: Recommendation Systems (Zhiwu)</h2>
+                
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Core Concepts</summary>
+                    <ul class="list-disc list-inside space-y-1 mt-2 text-gray-700">
+                        <li>Goal of recommendation systems: personalized suggestion.</li>
+                        <li>User-item matrix: represents users' preferences/ratings for items.</li>
+                        <li>Cold-start problem.</li>
+                    </ul>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Content-Based Filtering</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Idea:</strong> Recommends items based on their content features and a user's profile.</p>
+                        <p><strong>Representation:</strong> Items (e.g., films) represented by feature vectors (e.g., $\[1, x_1 \text{ romance}, x_2 \text{ action}\]$, where 1 is for bias).</p>
+                        <p><strong>Learning User Profile ($\theta$):</strong> Typically using Linear Regression to learn a parameter vector $\theta$ for each user, such that $\theta^T X$ predicts the rating. 
+                            <div class="math-formula">Objective function: $$min_{\theta}\frac{1}{m}\sum_{i=1}^{m}(\theta^{T}X_{i}-y_i)^{2} \text{ (SSE)}$$</div>
+                        </p>
+                        <p><strong>Pros/Cons:</strong> Doesn't need other users' data, but requires feature engineering and can have limited novelty. Problems mentioned: requires hand-coded knowledge, not easy to scale, user may not have rated many films.</p>
+                    </div>
+                </details>
+                
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Collaborative Filtering (CF)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <p><strong>Idea:</strong> Recommends items based on similarities between users (user-based) or items (item-based).</p>
+                        
+                        <div>
+                            <h4 class="text-lg font-medium">User-Based CF:</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1">
+                                <li>Find similar users to the target user.</li>
+                                <li>Recommend items that similar users liked.</li>
+                                <li><strong>User Similarity Measures (LO1):</strong>
+                                    <ul class="list-circle list-inside ml-4 space-y-1">
+                                        <li>Euclidean Distance (and similarity: <div class="math-formula">$$sim_{L2}(x,y)=\frac{1}{1+\sqrt{\sum_{i\in I_{xy}}(r_{x,i}-r_{y,i})^{2}}}$$</div>)</li>
+                                        <li>Manhattan Distance. <div class="math-formula">$$||p-q||_{1}=\sum_{i=1}^{N}|q_{i}-p_{i}|$$</div></li>
+                                        <li>Cosine Similarity: <div class="math-formula">$$sim_{cos}(x,y)=\frac{\sum_{i\in I_{xy}}r_{x,i}r_{y,i}}{\sqrt{\sum_{i\in I_{xy}}r_{x,i}^{2}}\sqrt{\sum_{i\in I_{xy}}r_{y,i}^{2}}}$$</div> (focus on items rated by *both* users).</li>
+                                        <li>Pearson Correlation: <div class="math-formula">$$sim_{Pearson}(x,y)=\frac{\sum_{i\in I_{xy}}(r_{x,i}-\overline{r_{x}})(r_{y,i}-\overline{r_{y}})}{\sqrt{\sum_{i\in I_{xy}}(r_{x,i}-\overline{r_{x}})^{2}\sum_{i\in I_{xy}}(r_{y,i}-\overline{r_{y}})^{2}}}$$</div> ($\overline{r_x}$ is avg rating of user x for items in $I_{xy}$).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Predicting Ratings (LO1):</strong>
+                                     <ul class="list-circle list-inside ml-4 space-y-1">
+                                        <li>Weighted average: <div class="math-formula">$$r_{u,i}=\frac{\sum_{\hat{u}\in U}sim(u,\hat{u})r_{\hat{u},i}}{\sum_{\hat{u}\in U}|sim(u,\hat{u})|}$$</div></li>
+                                        <li>Average over similar users: <div class="math-formula">$$r_{u,i}=\frac{1}{N}\sum_{\hat{u}\in U}r_{\hat{u},i}$$</div></li>
+                                        <li>With mean centering: <div class="math-formula">$$r_{u,i}=\overline{r_{u}}+\frac{\sum_{\hat{u}\in U}sim(u,\hat{u})(r_{\hat{u},i}-\overline{r}_{\hat{u}})}{\sum_{\hat{u}\in U}|sim(u,\hat{u})|}$$</div></li>
+                                     </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-medium">Item-Based CF:</h4>
+                             <ul class="list-disc list-inside ml-4 space-y-1">
+                                <li>Find items similar to those the user has liked.</li>
+                                <li>Recommend these similar items.</li>
+                                <li>Item similarity (e.g., Cosine: <div class="math-formula">$$sim(i,j)=\frac{\sum_{u}r_{u,i}\cdot r_{u,j}}{\sqrt{\sum_{u}r_{u,i}^{2}}\sqrt{\sum_{u}r_{u,j}^{2}}}$$</div>).</li>
+                             </ul>
+                        </div>
+                        <p><strong>Sparsity:</strong> User-item matrices are often sparse.</p>
+                        <p><strong>Data Normalization/Mean Centering:</strong> To handle inconsistent rating scales.</p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Hybrid Approaches & Evaluation</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Hybrid Approaches:</strong> Combine content-based and collaborative filtering.</p>
+                        <p><strong>Evaluation:</strong> Mean Absolute Error (MAE) for rating prediction accuracy. Other metrics: Precision, Recall, F1-score.</p>
+                    </div>
+                </details>
+                <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision MCQs (Zhiwu - L1)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: What is the primary goal of a recommendation system?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Classification</li><li>B. Clustering</li><li>C. Prediction</li><li>D. Personalized suggestion</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 2: In collaborative filtering, what does the "user-item matrix" represent?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Users' demographic information</li><li>B. Items' characteristics</li><li>C. Users' preferences for items</li><li>D. Ratings given by users to items</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D (Note: C is also plausible, D is more specific to explicit feedback systems commonly discussed with user-item matrices)</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 3: Which evaluation metric measures the accuracy of predicted ratings in recommendation systems?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Precision</li><li>B. Recall</li><li>C. Mean Absolute Error (MAE)</li><li>D. F1 score</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: C</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 4: In the context of collaborative filtering, what is the purpose of the user-based approach?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. To identify similar items</li><li>B. To find similar users</li><li>C. To recommend popular items</li><li>D. To address the cold start problem</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 5: Which algorithm is commonly used for generating recommendations in an item-item collaborative filtering system?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. k-Nearest Neighbors (k-NN)</li><li>B. Decision Trees</li><li>C. Apriori algorithm</li><li>D. Naive Bayes</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: A</p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lecture2" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Lecture 2: Discovering Groups (Clustering) (Zhiwu)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Core Concepts</summary>
+                    <ul class="list-disc list-inside space-y-1 mt-2 text-gray-700">
+                        <li>Unsupervised learning.</li>
+                        <li>Goal: Group similar data points.</li>
+                        <li>Hard vs. Soft clustering.</li>
+                    </ul>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">K-Means Clustering</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Algorithm Steps (LO2):</strong> </p>
+                        <ol class="list-decimal list-inside ml-4">
+                            <li>Initialize K centroids.</li>
+                            <li><strong>Assignment Step (E-step):</strong> Assign each point to the nearest centroid.</li>
+                            <li><strong>Update Step (M-step):</strong> Recalculate centroids as the mean of assigned points.</li>
+                            <li>Repeat steps 2-3 until convergence.</li>
+                        </ol>
+                        <p><strong>Objective Function (SSE LO1):</strong> <div class="math-formula">$$J=\sum_{n=1}^{N}\sum_{k=1}^{K}r_{nk}||x_{n}-\mu_{k}||^{2}$$</div></p>
+                        <p><strong>Distance Measures:</strong> Euclidean, Manhattan.</p>
+                        <p><strong>Pros:</strong> Simple, efficient.</p>
+                        <p><strong>Cons (LO1):</strong> Need K, sensitive to initialization, local minimum, assumes spherical/convex clusters, not for non-linear/varying density clusters.</p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">DBSCAN</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Core Concepts:</strong> `eps` (radius), `minPts` (min points in radius). </p>
+                        <p><strong>Point Types:</strong> Core, Border, Noise (Outlier).</p>
+                        <p><strong>Handling Outliers (LO1):</strong> Labels outliers as noise.</p>
+                        <p><strong>Pros (LO1):</strong> Arbitrary shapes, robust to outliers, no K needed, good for varying shapes/densities. </p>
+                        <p><strong>Cons (LO1):</strong> Sensitive to `eps`/`minPts`, struggles with varying density clusters (global params), high dimensions.</p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Hierarchical Clustering (Agglomerative)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Idea:</strong> Bottom-up merging of closest clusters.</p>
+                        <p><strong>Linkage Methods (LO1):</strong> Single (MIN), Complete (MAX), Average (UPGMA).</p>
+                        <p><strong>Dendrogram:</strong> Tree representation, cut for clusters.</p>
+                        <p><strong>Pros (LO1):</strong> No K pre-specified, visual dendrogram. </p>
+                        <p><strong>Cons (LO1):</strong> Needs threshold for cut, linkage choice matters, computationally intensive.</p>
+                    </div>
+                </details>
+                <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision MCQs (Zhiwu - L2)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: What is the primary objective of clustering algorithms in data mining?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Classification</li><li>B. Prediction</li><li>C. Grouping similar data points</li><li>D. Outlier detection</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: C</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 2: What is the main drawback of the k-means clustering algorithm?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Sensitivity to initial cluster centroids</li><li>B. Inability to handle non-linear clusters</li><li>C. Lack of scalability</li><li>D. Dependency on data distribution</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: A</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 3: How does the DBSCAN algorithm handle outliers in the dataset?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Assigns outliers to the nearest cluster</li><li>B. Removes outliers from the dataset</li><li>C. Labels outliers as noise</li><li>D. Forms separate clusters for outliers</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: C</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 4: Which clustering algorithm is particularly effective for identifying clusters with varying shapes and densities?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. K-means</li><li>B. DBSCAN</li><li>C. Hierarchical clustering</li><li>D. None of above</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 5: Given the 1D data points {1, 2, 3, 4, 6, 7, 8, 9, 10}, if k-means clustering is run with k=2 and initial cluster centers at C1=2 and C2=8 using Manhattan distance. Which points will be in the cluster with center 8 in the first iteration?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. {4,6,7,8,9,10}</li><li>B. {6,7,8,9,10}</li><li>C. {7,8,9,10}</li><li>D. {8,9,10}</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B (Points 1,2,3,4 are closer to C1=2. Point 5 (not present, typo in original Q means 6 is next). Point 6: |6-2|=4, |6-8|=2 -> C2. Point 7: |7-2|=5, |7-8|=1 -> C2. Correcting based on options provided, likely intended set {6,7,8,9,10}) </p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lecture3" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Lecture 3: Covariance, EVD, PCA & SVD (Zhiwu)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Basic Statistics (LO1)</summary>
+                    <ul class="list-disc list-inside space-y-1 mt-2 text-gray-700">
+                        <li><strong>Expectation (Mean):</strong> <div class="math-formula">$$E[X] = \mu = \frac{1}{n}\sum x_i$$</div></li>
+                        <li><strong>Variance:</strong> <div class="math-formula">$$\sigma^{2}(x) = E[(X-E[X])^{2}] = \frac{1}{n}\sum(x_i-\mu)^{2}$$</div></li>
+                        <li><strong>Covariance:</strong> <div class="math-formula">$$\sigma(x,y) = E[(X-E[X])(Y-E[Y])] = \frac{1}{n}\sum(x_i-\mu_x)(y_i-\mu_y)$$</div> If $\sigma(x,y)=0$, uncorrelated.</li>
+                        <li><strong>Covariance Matrix:</strong> Encodes how all features vary together. For centered data $Z$, $C \propto Z^T Z$. </li>
+                        <li><strong>Mean Centering:</strong> Subtracting mean from features. Data mean becomes origin.</li>
+                    </ul>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Eigenvalue Decomposition (EVD)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>For a matrix A, $Ax = \lambda x$. $\lambda$ is eigenvalue, $x$ is eigenvector.</p>
+                        <p>For covariance matrix $C = Q\Lambda Q^T$. $Q$ = eigenvectors (principal axes), $\Lambda$ = diagonal eigenvalues (variance along axes). </p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Principal Component Analysis (PCA) (LO2)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Goal:</strong> Reduce dimensionality by projecting onto principal components (eigenvectors with largest eigenvalues), retaining max variance.</p>
+                        <p><strong>Steps (using EVD):</strong> Mean center data $\rightarrow$ Covariance matrix $\rightarrow$ EVD $\rightarrow$ Sort eigenvectors by eigenvalues $\rightarrow$ Select top $k$ eigenvectors for projection matrix $P \rightarrow$ Project: $X_P = ZP$. </p>
+                        <p><strong>Primary Goal:</strong> To reduce the dimensionality of the data.</p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Singular Value Decomposition (SVD) (LO2)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>Factorization for any matrix: $A = U\Sigma V^T$.</p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>$U$: Left singular vectors (eigenvectors of $AA^T$).</li>
+                            <li>$V$: Right singular vectors (eigenvectors of $A^T A$). (Principal components if A is mean-centered).</li>
+                            <li>$\Sigma$: Diagonal matrix of singular values (sqrt of eigenvalues of $AA^T$ or $A^T A$). Quantify importance of dimensions. </li>
+                        </ul>
+                        <p><strong>PCA using SVD:</strong> Mean center $Z \rightarrow Z = U\Sigma V^T \rightarrow$ Columns of $V$ are PCs $\rightarrow$ Select top $k$ columns of $V$ for $P \rightarrow X_P = ZP = U_k \Sigma_k$. </p>
+                        <p><strong>Advantages over EVD of cov matrix:</strong> Better numerical stability, faster, for non-square matrices. </p>
+                        <p><strong>Truncated SVD:</strong> $A \approx U_r \Sigma_r V_r^T$. Low-rank approximation.</p>
+                    </div>
+                </details>
+                <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision MCQs (Zhiwu - L3)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: What does covariance measure in the context of data mining?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Strength of linear relationship between two variables</li><li>B. Independence between two variables</li><li>C. Magnitude of individual variables</li><li>D. Mean absolute difference between two variables</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: A</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 2: In eigenvalue decomposition of a matrix, what is the significance of the eigenvectors?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. They represent the scaling factors</li><li>B. They represent the rotation angles</li><li>C. They define the transformation matrix</li><li>D. They define the principal components</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 3: In PCA, what is the primary goal of transforming the original variables into principal components?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. To reduce the dimensionality of the data.</li><li>B. To increase the interpretability of the data.</li><li>C. To increase the correlation between variables.</li><li>D. To make the data non-linear.</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: A</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 4: In the context of SVD, what is the significance of singular values?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. They represent the magnitude of eigenvalues</li><li>B. They indicate the strength of covariance between variables</li><li>C. They define the principal components</li><li>D. They quantify the importance of individual dimensions</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 5: What is a key advantage of SVD over eigenvalue decomposition?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. SVD is faster</li><li>B. SVD is more accurate</li><li>C. SVD works only for square matrices</li><li>D. SVD can be applied to non-square matrices</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D</p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lecture4" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Lecture 4: Embedding Data (Zhiwu)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Core Idea</summary>
+                    <p class="mt-2 text-gray-700">Generate a reduced-dimensional (usually 2D for visualization) representation while maintaining the topological structure (local relationships) of the data.</p>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">PCA for Embedding</summary>
+                    <p class="mt-2 text-gray-700">Can be used, but focuses on global variance, may not preserve local structures well (e.g., Swiss Roll example). Linear projection. </p>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Self-Organizing Maps (SOM) (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Idea:</strong> Maps high-D data onto a (usually 2D) grid of neurons, preserving topology.</p>
+                        <p><strong>Training (Competitive Learning):</strong></p>
+                        <ol class="list-decimal list-inside ml-4">
+                            <li>Initialize neuron weights.</li>
+                            <li>For each input $X_j$: Find Best Matching Unit (BMU), update BMU and neighbors closer to $X_j$. 
+                            <div class="math-formula">$$w(t+1)=w(t)+\theta(u,v,t)\alpha(t)(X_{j}-w(t))$$</div>
+                            ($\theta$ = neighborhood function, $\alpha$ = learning rate).</li>
+                        </ol>
+                        <p><strong>Pros:</strong> Good for clustering/visualization, preserves topology, unsupervised.</p>
+                        <p><strong>Cons:</strong> Slow for large datasets, grid size matters, not for non-topological structures.</p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Stochastic Neighbor Embedding (SNE) (LO1)</summary>
+                     <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Idea:</strong> Converts high-D distances to conditional probabilities. Matches low-D probability distribution to high-D.</p>
+                        <p>High-D Probs ($p_{j|i}$): <div class="math-formula">$$p_{j|i} = \frac{\exp(-||x_i - x_j||^2 / 2\sigma_i^2)}{\sum_{k \neq i} \exp(-||x_i - x_k||^2 / 2\sigma_i^2)}$$</div></p>
+                        <p>Low-D Probs ($q_{j|i}$): <div class="math-formula">$$q_{j|i} = \frac{\exp(-||y_i - y_j||^2)}{\sum_{k \neq i} \exp(-||y_i - y_k||^2)}$$</div></p>
+                        <p><strong>Cost Function (KL Divergence):</strong> <div class="math-formula">$$C = \sum_i \sum_j p_{ij} \log \frac{p_{ij}}{q_{ij}}$$</div></p>
+                        <p><strong>Cons:</strong> Difficult to optimize, prone to "crowding problem". </p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">t-Distributed SNE (t-SNE) (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Improvement over SNE:</strong> Addresses crowding.</p>
+                        <p>Uses Student's t-distribution for low-D similarities ($q_{ij}$): <div class="math-formula">$$q_{ij} = \frac{(1 + ||y_i - y_j||^2)^{-1}}{\sum_{k \neq l} (1 + ||y_k - y_l||^2)^{-1}}$$</div></p>
+                        <p><strong>Pros:</strong> Better clustering, preserves local & some global structure, good for visualization.</p>
+                        <p><strong>Cons:</strong> Computationally expensive, results vary with hyperparameters, hard to interpret global distances.</p>
+                    </div>
+                </details>
+                 <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Multidimensional Scaling (MDS)</summary>
+                    <p class="mt-2 text-gray-700">Aims to preserve pairwise distances. Stress quantifies reconstruction error.</p>
+                </details>
+                 <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision MCQs (Zhiwu - L4)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: In a self-organizing map (SOM), which neuron's weights are adjusted during training?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Only the winning neuron</li><li>B. The winning neuron and its neighbors</li><li>C. All neurons in the map</li><li>D. A randomly selected subset of neurons</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 2: Given a trained SOM and a new input vector [0.2, 0.7], which of the following neurons would be selected as the winner using Euclidean distance?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Neuron 1: [0.1, 0.5] (Dist = $\sqrt{(0.2-0.1)^2 + (0.7-0.5)^2} = \sqrt{0.01+0.04} = \sqrt{0.05} \approx 0.223$)</li><li>B. Neuron 2: [0.3, 0.8] (Dist = $\sqrt{(0.2-0.3)^2 + (0.7-0.8)^2} = \sqrt{0.01+0.01} = \sqrt{0.02} \approx 0.141$)</li><li>C. Neuron 3: [0.6, 0.4] (Dist = $\sqrt{(0.2-0.6)^2 + (0.7-0.4)^2} = \sqrt{0.16+0.09} = \sqrt{0.25} = 0.5$)</li><li>D. Neuron 4: [0.8, 0.2] (Dist = $\sqrt{(0.2-0.8)^2 + (0.7-0.2)^2} = \sqrt{0.36+0.25} = \sqrt{0.61} \approx 0.781$)</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 3: Multidimensional scaling (MDS) aims to ensure that points close together in the embedded space are also close in the original space. What term quantifies the reconstruction error?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Accuracy</li><li>B. Stress</li><li>C. Entropy</li><li>D. Inertia: the distance between each data point and its centroid</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 4: What is the main advantage of using t-Distributed Stochastic Neighbor Embedding (t-SNE) over traditional methods like Principal Component Analysis (PCA)?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Faster computation</li><li>B. Better preservation of local structures in the data</li><li>C. Reduced risk of overfitting</li><li>D. Improved interpretability</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lecture5" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Lecture 5: Search & Rank (Zhiwu)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Core Concepts & Pipeline (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Goal:</strong> Retrieve relevant information based on a query and rank results.</p>
+                        <p><strong>Pipeline:</strong> Encoding $\rightarrow$ Indexing $\rightarrow$ Matching/Scoring $\rightarrow$ Ranking $\rightarrow$ (Feedback).</p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Vector Space Model (VSM) for Text (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>Documents and queries are vectors. Similarity (e.g., cosine) for relevance.</p>
+                        <p><strong>Term Weights:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Term Frequency (TF):</strong> $c(w,d)$ or $f$.</li>
+                            <li><strong>Inverse Document Frequency (IDF):</strong> $log \frac{M+1}{df(w)}$ or $log \frac{N}{n}$.</li>
+                            <li><strong>TF-IDF:</strong> $TF \times IDF$. High value = important to doc & rare in collection.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Text Preprocessing & Indexing (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Preprocessing:</strong> Tokenization, Stop-word removal, Stemming/Lemmatization $\rightarrow$ Bag of Words.</p>
+                        <p><strong>Indexing Goal:</strong> Efficient retrieval.</p>
+                        <p><strong>Inverted Index:</strong> Dictionary of terms pointing to documents (postings lists). </p>
+                    </div>
+                </details>
+                <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision MCQs (Zhiwu - L5)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: What is the primary purpose of encoding in the context of searching and ranking in data mining?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Compression of data</li><li>B. Conversion of data into a format</li><li>C. Creation of an index for efficient retrieval</li><li>D. Encryption of data</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 2: In the context of searching and ranking in data mining, what is indexing used for?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Sorting data for presentation</li><li>B. Efficient retrieval of relevant information</li><li>C. Encoding data for storage</li><li>D. Encrypting sensitive information</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 3: What does the term "inverted index" refer to in the context of searching and ranking?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. An index that is sorted in reverse order</li><li>B. An index where the positions of terms in documents are recorded</li><li>C. A type of encoding technique</li><li>D. A ranking algorithm</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B (More accurately, an index mapping terms to documents containing them) </p></details>
+                        </div>
+                         <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 4: Which of the following is an essential component of the matching process in searching and ranking?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Clustering</li><li>B. Indexing</li><li>C. Ranking</li><li>D. Similarity measure</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 5: How does tf-idf (Term Frequency-Inverse Document Frequency) contribute to the ranking of documents in information retrieval?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. It measures the frequency of a term in a document</li><li>B. It penalizes common terms and emphasizes those with a high frequency in a given document</li><li>C. It encrypts the document content</li><li>D. It compresses the document for efficient storage</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 6: How is TF-IDF calculated for a term w in a document d? (f, F are the frequency of w, the frequency of all the words appeared in d. N, n are the total number of documents, and the number of documents where the term w appears.) </p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. $F/f \times \log(N/n)$</li><li>B. $f/F \times \log(N/n)$</li><li>C. $F/f \times \log(n/N)$</li><li>D. $f/F \times \log(n/N)$</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B </p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lecture6" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Lecture 6: Document Filtering (Zhiwu)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Naive Bayes Classifier (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Bayes' Theorem:</strong> <div class="math-formula">$$P(c|d) = \frac{P(d|c)P(c)}{P(d)}$$</div></p>
+                        <p><strong>"Naive" Assumption:</strong> Conditional independence of features (words) given class: $P(d|c) = \prod P(w_i|c)$.</p>
+                        <p><strong>$P(w|c)$ Calculation:</strong> (Count of $w$ in class $c$) / (Total words in class $c$). Use smoothing for unseen words.</p>
+                        <p><strong>$P(c)$ Calculation:</strong> (Docs in class $c$) / (Total docs).</p>
+                        <p><strong>Classification:</strong> Maximize $P(d|c)P(c)$.</p>
+                        <p><strong>Text Data Weighted Approach (for unseen words):</strong> <div class="math-formula">$P(w|c)_{final} = \frac{\text{weight}\times\text{assumed_prob}+(\text{docs_in_class}\times P(w|c)_{calc})}{\text{weight}+\text{docs_in_class}}$</div>(assumed_prob e.g., 0.5; weight e.g., 1) </p>
+                        <p><strong>Pros:</strong> Simple, efficient. <strong>Cons:</strong> Independence assumption often violated.</p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Fisher's Method (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Idea:</strong> Combines probabilities $P(c|w_i)$ from multiple words.</p>
+                        <p>Statistic: $-2 \sum_{i} \ln(P(w_i|C_c))$ follows $\chi^2_{2N}$ distribution. This term is used to calculate overall $P(D|C_c)$. </p>
+                        <p>Overall doc probability for class c: $P(C_c|D) = \frac{P(D|C_c)P(C_c)}{\sum_{j} P(D|C_j)P(C_j)}$, where $P(D|C_c) = \prod_i P(w_i|C_c)$.</p>
+                        <p><strong>Pros:</strong> Less sensitive to inaccurate individual word probabilities. <strong>Cons:</strong> Assumes independence.</p>
+                    </div>
+                </details>
+                 <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision MCQs (Zhiwu - L6)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: What is the key assumption made by the Naive Bayes classifier?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Features are correlated</li><li>B. Features are independent given the class</li><li>C. Features follow a Gaussian distribution</li><li>D. Features have equal variance</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 2: What is the purpose of the "assumed" parameter in the Naive Bayes classifier for text data?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. It is the assumed value for the prior probability</li><li>B. It is the assumed value for the posterior probability</li><li>C. It is the assumed value for the likelihood probability when a word is not present</li><li>D. It is the assumed value for the feature independence assumption</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: C</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 3: In Fisher's method, the combined p-value is calculated by: </p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Adding the individual p-values</li><li>B. Multiplying the individual p-values</li><li>C. Taking the average of the individual p-values</li><li>D. Using a chi-square statistic on the individual p-values</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 4: Suppose we have a binary classification problem with two classes: spam (c1) and not spam (c2). The prior probabilities are $P(c1)=0.4$ and $P(c2)=0.6$. For a given document d, the likelihood probabilities are $P(d|c1)=0.7$ and $P(d|c2)=0.3$. If we use the Naive Bayes method, is this document d a spam or not? </p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Yes</li><li>B. No</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>$P(c1|d) \propto P(d|c1)P(c1) = 0.7 \times 0.4 = 0.28$. <br/> $P(c2|d) \propto P(d|c2)P(c2) = 0.3 \times 0.6 = 0.18$. <br/>Since $0.28 > 0.18$, it's spam. Answer: A</p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lecture7" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Lecture 7: Decision Trees (Zhiwu)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Core Concepts & Impurity (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>Tree structure: Nodes (feature tests), Branches (outcomes), Leaves (class labels).</p>
+                        <p><strong>Goal:</strong> Maximize leaf node purity.</p>
+                        <p><strong>Gini Impurity:</strong> $Gini(S) = 1 - \sum p_i^2$. (e.g., 6A, 4B $\rightarrow$ Gini = $1 - (0.6^2+0.4^2) = 0.48$). </p>
+                        <p><strong>Entropy:</strong> $Entropy(S) = -\sum p_i \log_2 p_i$.</p>
+                        <p><strong>Information Gain:</strong> $Gain(S, A) = Impurity(S) - \sum \frac{|S_v|}{|S|} Impurity(S_v)$. Higher is better.</p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Building & Overfitting (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Algorithms:</strong> CART (Gini, binary), ID3 (Entropy). </p>
+                        <p><strong>Greedy Approach:</strong> Locally optimal split at each node.</p>
+                        <p><strong>Overfitting:</strong> Tree fits noise. Addressed by Pruning (Reduced Error, Entropy-Based/Cost Complexity) or pre-pruning. </p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Ensemble Methods (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Bagging:</strong> Bootstrap samples, train tree on each, aggregate. Reduces variance. </p>
+                        <p><strong>Random Forests:</strong> Bagging + random feature subsets at each split. Further decorrelates. </p>
+                        <p><strong>Boosting (AdaBoost, Gradient Boosting):</strong> Sequential trees, new trees correct prior errors. </p>
+                    </div>
+                </details>
+                 <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision MCQs (Zhiwu - L7)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: Which of the following is NOT a characteristic of decision trees?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Tree-like structure with nodes representing feature tests</li><li>B. Branches represent outcomes of feature tests</li><li>C. Leaf nodes represent class labels</li><li>D. Nodes must split data into equal-sized partitions</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 2: What is the primary goal when constructing a decision tree for classification?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. To maximize the depth of the tree</li><li>B. To create a balanced tree</li><li>C. To minimize the number of leaf nodes</li><li>D. To maximize the purity of leaf nodes</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 3: If a node contains 10 examples, 6 of class A and 4 of class B, what is the Gini impurity of this node?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. 0.48</li><li>B. 0.52</li><li>C. 0.64</li><li>D. 0.36</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Gini = $1 - ((6/10)^2 + (4/10)^2) = 1 - (0.36 + 0.16) = 1 - 0.52 = 0.48$. Answer: A</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 4: In the context of decision trees, what does the term "greedy" refer to?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. The algorithm's appetite for more data</li><li>B. The algorithm's tendency to overfit</li><li>C. The algorithm's ability to find the globally optimal solution</li><li>D. The algorithm's strategy of making the locally optimal choice at each step</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 5: Which ensemble method builds multiple decision trees on random subsets of features?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Bagging</li><li>B. Boosting</li><li>C. Random forests</li><li>D. None of the above</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: C</p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lecture8" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Lecture 8: Nearest Neighbors (k-NN) (Zhiwu)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">k-NN Algorithm (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Idea:</strong> Classify new point by majority class of its K closest neighbors. </p>
+                        <p><strong>Steps:</strong> Choose K $\rightarrow$ Calculate distances $\rightarrow$ Identify K nearest $\rightarrow$ Vote.</p>
+                        <p><strong>Choosing K:</strong> Not too small (noise), not too large (oversmoothing). Odd K for binary.</p>
+                        <p><strong>Weighted k-NN:</strong> Closer neighbors get more weight in vote (e.g., $w_i = 1/d(x_q, x_i)^2$). </p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Pros, Cons & Considerations (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Pros:</strong> Simple, non-parametric, non-linear boundaries.</p>
+                        <p><strong>Cons:</strong> Computationally expensive, stores all data, sensitive to K & irrelevant features, curse of dimensionality. </p>
+                        <p><strong>Attribute Scales:</strong> Normalize/Standardize data (e.g., Z-score). </p>
+                        <p><strong>Locality-Sensitive Hashing (LSH):</strong> Speeds up finding approximate nearest neighbors. </p>
+                    </div>
+                </details>
+                <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision MCQs (Zhiwu - L8)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: What is the key idea behind the k-NN algorithm?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Use training records directly to predict the class label of test cases by considering their neighbor correlations</li><li>B. Train an explicit model using the training data</li><li>C. Use majority voting to determine the class label</li><li>D. a and c</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 2: Given the following data points and their class labels: (1, 1, Class A), (2, 2, Class B), (3, 3, Class A), (4, 4, Class B), what would be the class label assigned to the unknown point (2, 3) using the k-NN algorithm with k=3 and Euclidean distance?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Class A</li><li>B. Class B</li><li>C. Tie between Class A and Class B</li><li>D. Not enough information to determine the class label</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary>
+                                <p>Distances to (2,3):<br/>
+                                (1,1)A: $\sqrt{(2-1)^2+(3-1)^2} = \sqrt{1+4} = \sqrt{5} \approx 2.23$<br/>
+                                (2,2)B: $\sqrt{(2-2)^2+(3-2)^2} = \sqrt{0+1} = 1$<br/>
+                                (3,3)A: $\sqrt{(2-3)^2+(3-3)^2} = \sqrt{1+0} = 1$<br/>
+                                (4,4)B: $\sqrt{(2-4)^2+(3-4)^2} = \sqrt{4+1} = \sqrt{5} \approx 2.23$<br/>
+                                K=3 neighbors: (2,2)B, (3,3)A, and one of ((1,1)A or (4,4)B). If (1,1)A is chosen, neighbors are B,A,A. Majority: A. Answer: A</p>
+                            </details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 3: What is a potential issue when using the k-NN algorithm with different attribute scales?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. The distance measures may be dominated by one of the attributes</li><li>B. The algorithm may not converge</li><li>C. The algorithm may overfit the training data</li><li>D. The algorithm may be biased towards the minority class</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: A</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 4: What is the purpose of using Locality-Sensitive Hashing (LSH) in the context of k-NN?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. To improve the accuracy of the algorithm</li><li>B. To reduce the computational complexity of the algorithm</li><li>C. To handle missing data in the dataset</li><li>D. To perform dimensionality reduction</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 5: Which of the following is NOT a disadvantage of the k-NN algorithm?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. It is sensitive to the choice of k</li><li>B. It requires storing all the training data</li><li>C. It is not suitable for large datasets due to computational complexity</li><li>D. It cannot handle non-linear decision boundaries</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D (k-NN *can* handle non-linear decision boundaries)</p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lecture9" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Lecture 9: Market Basket Analysis (Zhiwu)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Core Concepts & Metrics (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>Item, Itemset, Transaction. Association Rule: $X \rightarrow Y$. </p>
+                        <p><strong>Support Count ($count(A)$):</strong> # transactions with A.</p>
+                        <p><strong>Support ($supp(A)$):</strong> $count(A) / \text{Total Transactions}$.</p>
+                        <p><strong>Support ($supp(X \rightarrow Y)$):</strong> $supp(X \cup Y)$.</p>
+                        <p><strong>Confidence ($conf(X \rightarrow Y)$):</strong> $supp(X \cup Y) / supp(X)$. (e.g., $supp(\{X,Y\})=1200/5000=0.24, supp(\{X\})=2000/5000=0.4 \rightarrow conf=0.6$). </p>
+                        <p><strong>Goal:</strong> Find "strong" rules ($\ge$ min_sup, $\ge$ min_conf).</p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Apriori Algorithm (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Purpose:</strong> Find frequent itemsets, then generate rules. </p>
+                        <p><strong>Anti-Monotone Property:</strong> If itemset is frequent, all subsets are frequent. If infrequent, all supersets are infrequent (used for pruning). </p>
+                        <p><strong>Steps (Level-wise):</strong> $L_1$ (freq 1-itemsets) $\rightarrow$ Generate $C_k$ (candidates) by joining $L_{k-1}$ $\rightarrow$ Prune $C_k$ using Apriori $\rightarrow$ Count support for $C_k \rightarrow L_k$ (freq k-itemsets).</p>
+                        <p><strong>Rule Generation:</strong> For frequent $L$, for $S \subset L$, check $conf(S \rightarrow (L-S))$.</p>
+                    </div>
+                </details>
+                <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision MCQs (Zhiwu - L9)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: Which of the following statements best describes a transaction in market basket analysis?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. A set of all items sold in a store</li><li>B. An individual item or article in a basket</li><li>C. A set of items purchased together in a single shopping basket</li><li>D. The process of generating association rules</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: C</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 2: What is the purpose of the Apriori algorithm in market basket analysis?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. To find all possible association rules</li><li>B. To find all frequent itemsets that satisfy the minimum support threshold</li><li>C. To generate high-confidence rules from frequent itemsets</li><li>D. Both b) and c)</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 3: The anti-monotone property of support in the Apriori algorithm states that:</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. If an itemset is frequent, then all of its supersets must also be frequent</li><li>B. If an itemset is infrequent, then all of its subsets must also be infrequent</li><li>C. If an itemset is frequent, then all of its subsets must also be frequent</li><li>D. If an itemset is infrequent, then some of its supersets might be frequent</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: C</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 4: In a dataset with 5000 transactions, the itemset {X, Y} appears in 1200 transactions, and the itemset {X} appears in 2000 transactions. What is the confidence of the association rule $\{X\}\rightarrow\{Y\}$? </p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. 0.24</li><li>B. 0.4</li><li>C. 0.6</li><li>D. 2.4</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Confidence = count(X,Y) / count(X) = 1200 / 2000 = 0.6. Answer: C</p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lecture10" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Lecture 10: Semantic Spaces (LSA) (Zhiwu)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Latent Semantic Analysis (LSA) (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Idea:</strong> Uncover latent semantic structure via word co-occurrence using dimensionality reduction on term-document matrix. </p>
+                        <p><strong>Steps:</strong> Create Term-Document Matrix (A, BoW) $\rightarrow$ Apply Truncated SVD: $A \approx U_r \Sigma_r V_r^T$. </p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>$U_r$: Term-concept matrix.</li>
+                            <li>$V_r^T$: Concept-document matrix.</li>
+                        </ul>
+                        <p><strong>Effect of Truncated SVD:</strong> Reduces noise, captures important patterns.</p>
+                        <p><strong>Interpretation:</strong> Weights can be negative, "concepts" are linear mixtures, may lack clear semantic meaning. </p>
+                        <p><strong>Pros:</strong> Simple, efficient, captures synonymy. <strong>Cons:</strong> Concepts hard to interpret, BoW limits, unconstrained weights.</p>
+                    </div>
+                </details>
+                <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision MCQs (Zhiwu - L10)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: What is the underlying principle behind Latent Semantic Analysis (LSA)?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Identifying co-occurrence patterns of words in text data</li><li>B. Applying supervised learning on labeled text data</li><li>C. Extracting topics using clustering techniques</li><li>D. Finding semantic features with dimensionality reduction on the term-document matrix</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D (LSA uses dimensionality reduction on term-document matrix which implicitly uses co-occurrence)</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 2: In LSA, what does the Bag of Words (BoW) model provide?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Semantic word embeddings</li><li>B. A sparse term-document matrix</li><li>C. A clustering of documents</li><li>D. A probabilistic topic distribution</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 3: Why might some LSA weights be difficult to interpret semantically?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. They are constrained to be binary (0 or 1)</li><li>B. They can take unconstrained, including negative values</li><li>C. They ignore co-occurrence information</li><li>D. They require labeled topic data</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 4: What is the effect of applying truncated SVD in LSA?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. It increases the size of the term-document matrix</li><li>B. It removes the most important dimensions</li><li>C. It reduces noise and captures the most important patterns</li><li>D. It converts words into probability distributions</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: C</p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lecture11" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Lecture 11: Finding Features II (Topic Modeling) (Zhiwu)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Non-Negative Matrix Factorization (NMF) (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Idea:</strong> Factorize term-doc matrix $A \ge 0$ into $A \approx WH$, where $W \ge 0, H \ge 0$. </p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>$W$: Term-topic matrix (topics as word distributions).</li>
+                            <li>$H$: Topic-document matrix (docs as topic mixtures).</li>
+                        </ul>
+                        <p><strong>Algorithm:</strong> Iterative updates for W, H. Non-negativity $\rightarrow$ interpretable additive parts. </p>
+                        <p><strong>Pros:</strong> Interpretable. <strong>Cons:</strong> Need #topics, sensitive to init.</p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Probabilistic LSA (PLSA) (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Idea:</strong> Probabilistic topic model. $P(d,w) = P(d) \sum_z P(w|z)P(z|d)$. </p>
+                        <p>$P(w|z)$: Topic-word distribution. $P(z|d)$: Document-topic distribution.</p>
+                        <p>Parameters estimated via EM algorithm. </p>
+                        <p><strong>Pros:</strong> Probabilistic. <strong>Cons:</strong> Overfitting, not generative for new docs. </p>
+                    </div>
+                </details>
+
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Latent Dirichlet Allocation (LDA) (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Idea:</strong> Generative probabilistic topic model, improves PLSA.</p>
+                        <p><strong>Key:</strong> Uses Dirichlet priors for doc-topic ($\theta_d \sim \text{Dir}(\alpha)$) and topic-word ($\phi_z \sim \text{Dir}(\beta)$) distributions. Makes it generative, better generalization. </p>
+                        <p><strong>Inference:</strong> Typically Gibbs sampling or Variational Bayes.</p>
+                        <p><strong>Pros:</strong> Robust to overfitting, generalizes well.  <strong>Cons:</strong> Complex, inference slow, need #topics.</p>
+                    </div>
+                </details>
+                 <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision MCQs (Zhiwu - L11)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: Topic modeling can be conceptualized as:</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. A supervised classification method for text data</li><li>B. A process of uncovering the underlying themes or topics in a collection of documents</li><li>C. A method for extracting keywords from documents</li><li>D. A dimensionality reduction technique for text data</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: B</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 2: What is the main advantage of probabilistic topic models like PLSA and LDA over deterministic models like NMF?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. They can handle uncertainties and complexities in textual data more effectively</li><li>B. They are more computationally efficient</li><li>C. They can automatically determine the number of topics</li><li>D. They produce more interpretable topics</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: A</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 3: In the context of Latent Dirichlet Allocation (LDA), what is the role of the Dirichlet prior distribution?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. It is used to model the distribution of words given a topic</li><li>B. It is used to model the distribution of topics given a document</li><li>C. It is used to model the distribution of documents given a corpus</li><li>D. Both (a) and (b)</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 4: Which of the following inference techniques is commonly used for parameter estimation in PLSA?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Expectation-Maximization (EM) algorithm</li><li>B. random sampling</li><li>C. k-means clustering</li><li>D. Both (a) and (b)</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: A</p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lecture12" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Lecture 12: Outlier Detection (Zhiwu)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Approaches (LO1)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Extreme Value Analysis:</strong> Assume distribution (e.g., Gaussian), outliers in tails. GEV distributions (Gumbel, Fréchet, Weibull) for block maxima/minima.</p>
+                        <p><strong>Gaussian Mixture Models (GMM):</strong> Fit GMM, points with low probability density are outliers. Parameters: means, covariances, weights. Number of components is a hyperparameter. </p>
+                        <p><strong>DBSCAN for Outliers:</strong> Naturally identifies noise points. Advantage over GMM: handles varying densities, no Gaussian assumption. </p>
+                        <p><strong>Distance-Based (k-NN outliers):</strong> Points with few neighbors or large k-th neighbor distance.</p>
+                        <p><strong>Density-Based (LOF):</strong> Points in significantly lower local density regions.</p>
+                    </div>
+                </details>
+                <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision MCQs (Zhiwu - L12)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: What is the main idea behind using a Gaussian Mixture Model (GMM) for outlier detection?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Data points with low probability density under the fitted GMM are considered outliers</li><li>B. Data points that belong to low-weight Gaussian components are marked as outliers</li><li>C. Data points far away from the mean of any Gaussian component are outliers</li><li>D. Both a) and c)</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D (as per PDF provided answer, implying A and C are considered key ideas)</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 2: Which of the following is NOT a parameter that needs to be learned when fitting a GMM?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. Mean of each Gaussian component</li><li>B. Covariance matrix of each Gaussian component</li><li>C. Weight/Mixing proportion of each Gaussian component</li><li>D. Number of Gaussian components in the mixture</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: D (Number of components is usually a hyperparameter)</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 3: Which of the following is a potential advantage of using DBSCAN over Gaussian mixture models for outlier detection?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. DBSCAN can handle data with varying densities better</li><li>B. DBSCAN does not require setting any parameters like neighborhood radius</li><li>C. DBSCAN is more computationally efficient for high-dimensional data</li><li>D. DBSCAN can automatically determine the optimal number of clusters</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: A</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 4: Which statement best describes a key difference between GMMs and DBSCAN for outlier detection?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>A. GMMs are probabilistic models, while DBSCAN relies on density estimation</li><li>B. GMMs can only identify outliers, while DBSCAN can find clusters and outliers</li><li>C. GMMs assume Gaussian distributions, while DBSCAN makes no distribution assumptions</li><li>D. GMMs can handle outliers automatically, while DBSCAN requires pruning outliers</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: A (C is also a key difference; A is what the provided answers state)</p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lectureSLR" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Linear Regression (Shoaib)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Overview & Basic Stats</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>Predicting a continuous dependent variable (Y) from one or more independent variables (X). </p>
+                        <p><strong>Basic Stats Recap:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Mean: $E[X]=1/N\sum_{i=1}^{N}X_{i}$</li>
+                            <li>Variance: $V[X]=1/N\sum_{i=1}^{N}(X_{i}-E[X])^{2}=E[X^{2}]-E[X]^{2}$</li>
+                            <li>Covariance: $Cov[X,Y]=1/N\sum_{i=1}^{N}(X_{i}-E[X])(Y_{i}-E[Y])$</li>
+                            <li>Pearson Correlation: $r=\frac{Cov[X,Y]}{\sqrt{V[X]}\sqrt{V[Y]}}$</li>
+                        </ul>
+                        <p><strong>Types of Variables:</strong> Continuous, Ordinal, Categorical. Roles: Dependent (outcome), Independent (predictor). [cite: 98, 99, 100, 101]</p>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Method of Least Squares (LS)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>Finds the line $Y = mX + b$ that minimizes the sum of squared differences between actual $Y_i$ and predicted $mX_i+b$.</p>
+                        <p>Objective: $E(m,b)=\sum_{i=1}^{N}(mX_{i}+b-Y_{i})^{2}=min!$</p>
+                        <p>Solutions:</p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Slope: $m=\frac{\sum_{i=1}^{N}(Y_{i}-E[Y])(X_{i}-E[X])}{\sum_{i=1}^{N}(X_{i}-E[X])^{2}} = \frac{Cov[X,Y]}{V[X]}$</li>
+                            <li>Intercept: $b=E[Y]-mE[X]$</li>
+                        </ul>
+                        <p>In Machine Learning: Training set $(X_i, Y_i)$, learn mapping $y=f(x)$ by minimizing error function.</p>
+                    </div>
+                </details>
+                 <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Higher Dimensions & MLE</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Multi-dimensional Input ($x \in R^D$):</strong> $f(\vec{x})=\sum_{j=1}^{D}w_{j}x_{j}+b=\tilde{w}\tilde{x}$.</p>
+                        <p>Solution: $\tilde{w}=(\tilde{X}^{T}\tilde{X})^{-1}\tilde{X}^{T}y = X^{+}y$ (pseudoinverse). </p>
+                        <p><strong>Maximum Likelihood Estimation (MLE):</strong> Find parameters $p$ of a pdf $f(x;p)$ that maximize the likelihood of observing the data: $L(X_{1},...,X_{n};p)=\prod_{i=1}^{n}f(X_{i};p)$. </p>
+                        <p><strong>LS and MLE:</strong> If $Y_i = mX_i + b + \epsilon_i$ where $\epsilon_i \sim N(0, \sigma^2)$ (Gaussian noise), then LS is equivalent to MLE for $m, b$. </p>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Weighted LS & Non-Linearity</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Weighted Least Squares (WLS):</strong> Minimize $\sum_{i=1}^{N}w_{i}(mX_{i}+b-Y_{i})^{2}$. Used to focus accuracy or handle heteroskedasticity (non-constant variance of errors).</p>
+                        <p><strong>Homoskedasticity:</strong> Constant error variance. <strong>Heteroskedasticity:</strong> Non-constant error variance. For heteroskedastic MLE, set $w_i = 1/s_i^2$. </p>
+                        <p><strong>Local Linear Regression (e.g., LOESS, LOWESS):</strong> For non-linear data. Fits linear models locally using weighted least squares, where weights depend on distance from the point of estimation (e.g., tricubic kernel). Non-parametric. </p>
+                    </div>
+                </details>
+                <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision Exercises (Shoaib - Linear Regression)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question: A data set is constructed by taking 100 samples from a normal distribution with mean $\mu=5$ and standard deviation $\sigma=2$ to construct a random variable $X_i$. Then, a 2nd random variable $Y_i$ is constructed by taking the values of the corresponding $X_i$ and adding one half of a third random variate $Z_i$ drawn from a normal distribution with mean 5 and standard deviation 2. The parameters of a linear regression of Y on X by calculating the result analytically are:</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>(a) 1 and 2.5</li><li>(b) 0.5 and 2.5</li><li>(c) 0.75 and 2</li><li>(d) 0.25 and 3</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Solution: $Y = X + 0.5Z$. Slope $m = Cov(X, Y)/V(X) = Cov(X, X+0.5Z)/V(X) = (V(X) + 0.5Cov(X,Z))/V(X)$. Since X and Z are independent, $Cov(X,Z)=0$. So $m=1$. Intercept $b = E[Y] - mE[X] = E[X+0.5Z] - 1 \cdot E[X] = 0.5E[Z] = 0.5 \times 5 = 2.5$. Answer: (a) </p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question: _______ is a measure of the joint variability of two random variables.</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>(a) Variance</li><li>(b) Mean</li><li>(c) Covariance</li><li>(d) Mode</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: (c) Covariance</p></details>
+                        </div>
+                         <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question: _______ predicts a continuous variable from variation in another continuous variable.</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>(a) Logistic regression</li><li>(b) Linear regression</li><li>(c) All of the above</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: (b) Linear regression</p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lectureSLogR" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Logistic Regression (Shoaib)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Introduction & Core Idea</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>Predicts a binary (or categorical) outcome variable Y from predictor(s) X. This is a classification problem.</p>
+                        <p>Linear regression $Y=mX+b$ is not suitable as output isn't constrained to [0,1] for probabilities.</p>
+                        <p><strong>Logistic Transformation (Logit):</strong> Transforms probability $p(X)$ to have an unbounded range: $log\frac{p(X)}{1-p(X)}$. The term $p/(1-p)$ is called "odds".</p>
+                        <p><strong>Logistic Regression Model:</strong></p>
+                        <div class="math-formula">$$log\frac{p(X)}{1-p(X)} = b + wX$$</div>
+                        <p>This can be rewritten to predict probability $p(X)$ (Sigmoid function):</p>
+                        <div class="math-formula">$$p(X) = \frac{1}{1 + exp(-(b+wX))}$$</div> 
+                        <p>Decision boundary: $b+wX = 0$ (for $p(X)=0.5$).</p>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">MLE & Multinomial Case</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Maximum Likelihood Estimation (MLE):</strong> Parameters $w, b$ are fit using MLE. The log-likelihood function for binary logistic regression is:</p>
+                        <div class="math-formula">$$l(w,b) = \sum_{i=1}^{n} [y_i \log p(x_i) + (1-y_i) \log(1-p(x_i))]$$</div>
+                        <div class="math-formula">$$l(w,b) = \sum_{i=1}^{n} [-log(1+exp(b+x_i w)) + y_i(b+x_i w)]$$</div> 
+                        <p>Derivatives $\partial l / \partial w_j = \sum (y_i - p(x_i; w,b))x_{i,j} = 0$. Solved numerically (e.g., Newton's method). </p>
+                        <p><strong>Multinomial Logistic Regression (for >2 categories):</strong></p>
+                        <p>One category is chosen as reference (e.g., J). Model log-odds relative to reference:</p>
+                        <div class="math-formula">$$\eta_{i,j} = log \frac{p_{i,j}}{p_{i,J}} = \alpha_j + x_i \beta_j \quad \text{for } j=1, ..., J-1$$</div>
+                        <p>Probabilities (Softmax function):</p>
+                        <div class="math-formula">$$p_{i,j} = \frac{exp(\alpha_j + x_i \beta_j)}{1 + \sum_{k=1}^{J-1} exp(\alpha_k + x_i \beta_k)}$$</div> (denominator should be $\sum_{k=1}^{J} exp(\alpha_k + x_i \beta_k)$ if reference term $\alpha_J + x_i \beta_J = 0$ or $exp(0)=1$ is added to sum). The slides have $1 + \sum_{k=1}^{J-1}$ implying the J-th term's exponentiated linear predictor is 1. </p>
+                        <p><strong>Generalized Linear Models (GLMs):</strong> Logistic regression is a GLM with a binomial response distribution and a logit link function. </p>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Dealing with Non-Linearity & Model Selection</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Fitting Polynomials:</strong> Transform predictor X into $X, X^2, X^3, ...$ to capture non-linear relationships.</p>
+                        <p><strong>Occam's Razor:</strong> Prefer simpler models. Balance model fit with complexity. </p>
+                        <p><strong>Regularization (for overfitting):</strong> Add penalty to error: $E = ||y-\tilde{X}\tilde{w}||^{2}+\lambda||\tilde{w}||_{p}$.</p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Ridge ($L_2$ norm, $p=2$): Shrinks coefficients.</li>
+                            <li>Lasso ($L_1$ norm, $p=1$): Can force some coefficients to zero (feature selection).</li>
+                        </ul>
+                        <p><strong>Akaike's Information Criterion (AIC):</strong> $AIC = 2K - 2\log(L)$, where $K$ is number of parameters, $L$ is max likelihood. Lower AIC is better. Used for model selection. </p>
+                        <p><strong>Transformations:</strong> Apply functions like $log(X)$, $X^2$, $exp(X)$ to predictors if relationship is non-linear.</p>
+                        <p><strong>Interaction Terms:</strong> If effect of one predictor depends on another (e.g., $Y \sim X1 * X2$ in R, which is $X1 + X2 + X1:X2$). </p>
+                    </div>
+                </details>
+                <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision Exercises (Shoaib - Logistic Regression)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question: A data set has been collected to relate the age of a learner to the outcome of driving tests. Carrying out logistic regression, somebody obtains a slope of $w=0.01$ and an intercept of $b=0.1$. What are the chances of a 100 year old applicant to pass the test? </p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>(a) ~23%</li><li>(b) ~40%</li><li>(c) ~10%</li><li>(d) ~75%</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Solution: Logit $= b + wx = 0.1 + 0.01 \times 100 = 1.1$. Probability $p(x) = \frac{1}{1 + e^{-(1.1)}} \approx 0.7502$. Answer: (d)</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question: With logistic regression model parameters -1.75 (intercept) and 0.011 (slope), what is the chance of a film with Box Office takings of $50 million to win an Oscar?</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>(a) 50%</li><li>(b) 23%</li><li>(c) 64%</li><li>(d) 47%</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Solution: Logit $= -1.75 + 0.011 \times 50 = -1.75 + 0.55 = -1.2$. Probability $p(x) = \frac{1}{1 + e^{-(-1.2)}} = \frac{1}{1 + e^{1.2}} \approx \frac{1}{1 + 3.3201} \approx 0.231$. Answer: (b)</p></details>
+                        </div>
+                         <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Problem: Somebody collects a data set to analyze examination outcomes (discriminating between fail, pass, and repeat) of students on a three-year BSc degree and carries out multinomial logistic regression to predict the outcome dependent on the year of study. Results give: (i) intercept(fail)=1, slope(fail)=-1 and (ii) intercept(pass)=3, slope(pass)=-1/2. What is the chance of a student having to repeat the 3rd year? (Assume 'repeat' is the reference category). </p> </div>
+                            <details class="mt-2 answer-reveal"><summary>Show Solution Sketch</summary>
+                                <p>Let $x=3$ (3rd year). Reference category is 'Repeat'.</p>
+                                <p>$log\frac{P_{Fail}}{P_{Repeat}} = 1 - x = 1 - 3 = -2 \implies P_{Fail} = P_{Repeat} e^{-2}$</p>
+                                <p>$log\frac{P_{Pass}}{P_{Repeat}} = 3 - \frac{1}{2}x = 3 - \frac{1}{2}(3) = 3 - 1.5 = 1.5 \implies P_{Pass} = P_{Repeat} e^{1.5}$</p>
+                                <p>Since $P_{Repeat} + P_{Pass} + P_{Fail} = 1$: </p>
+                                <p>$P_{Repeat} (1 + e^{1.5} + e^{-2}) = 1$</p>
+                                <p>$P_{Repeat} = \frac{1}{1 + e^{1.5} + e^{-2}} = \frac{1}{1 + 4.4817 + 0.1353} = \frac{1}{5.617} \approx 0.178$. Chance is about 17.8%. [cite: 297, 298, 299, 300]</p>
+                            </details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lectureSIT" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Information Theory (Shoaib)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Information & Entropy</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Information:</strong> Quantifies surprise or uncertainty reduction. Information of observing event x: $log_2 \frac{1}{p(x)} = -log_2 p(x)$ bits.</p>
+                        <p><strong>Entropy (Shannon Entropy):</strong> Expected information content of a probability distribution $p(x)$. Measures average uncertainty.</p>
+                        <div class="math-formula">$$H(p) = -\sum_{x} p(x)log_2 p(x)$$</div>
+                        <p>Maximal for uniform distribution, minimal (0) if outcome is certain.</p>
+                        <p>Example: Fair coin ($p=0.5$ for H/T): $H = - (0.5 \log_2 0.5 + 0.5 \log_2 0.5) = 1$ bit.</p>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">KL Divergence & Mutual Information</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Kullback-Leibler (KL) Divergence (Relative Entropy):</strong> Measures difference between two probability distributions $f(x)$ and $g(x)$. Not symmetric.</p>
+                        <div class="math-formula">$$D_{KL}(f||g) = \sum_{x} f(x)log_2 \frac{f(x)}{g(x)}$$</div>
+                        <p>Represents information lost when approximating $f(x)$ with $g(x)$, or extra bits needed to encode $f(x)$ using a code optimal for $g(x)$.</p>
+                        <p><strong>Cross Entropy:</strong> $H(f,g) = -\sum_x f(x)log_2 g(x) = H(f) + D_{KL}(f||g)$. Minimizing KL is often equivalent to minimizing cross-entropy (and maximizing likelihood). </p>
+                        <p><strong>Conditional Entropy:</strong> Uncertainty of C given X. $H(C|X=x) = -\sum_c P(C|X=x)log_2 P(C|X=x)$.</p>
+                        <p><strong>Mutual Information:</strong> Expected reduction in uncertainty about C from knowing X (or vice-versa). Measures shared information. Always non-negative, symmetric.</p>
+                        <div class="math-formula">$$I(C;X) = H(C) - \sum_x P(X=x)H(C|X=x) = H(C) - H(C|X)$$</div>
+                        <div class="math-formula">$$I(C;X) = H(X) - H(X|C) = H(C) + H(X) - H(C,X)$$</div>
+                        <p><strong>Joint Entropy:</strong> $H(X,Y) = -\sum_{x,y} P(X=x,Y=y)log_2 P(X=x,Y=y)$. Sub-additive: $H(X,Y) \le H(X)+H(Y)$.</p>
+                    </div>
+                </details>
+                 <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Feature Selection using Information Theory</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Goal:</strong> Find a subset of features (words, attributes) that are most informative about a class C.</p>
+                        <p><strong>Simple Approach:</strong> Calculate $I(C; X_i)$ for each feature $X_i$. Select features with highest mutual information.</p>
+                        <p><strong>Greedy Algorithm (Improved):</strong></p>
+                        <ol class="list-decimal list-inside ml-4">
+                            <li>Select feature $X_1$ that maximizes $I(C; X_1)$.</li>
+                            <li>Given selected features $\{X_1, ..., X_k\}$, select next feature $X_{k+1}$ that maximizes conditional mutual information $I(C; X_{k+1} | X_1, ..., X_k)$.</li>
+                            <li>Stop based on a threshold or max number of features.</li>
+                        </ol>
+                        <p><strong>Interaction Information:</strong> $I(C;Y;X) = I(C;Y) - I(C;Y|X)$. Measures redundancy/synergy.</p>
+                    </div>
+                </details>
+                <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision Exercises (Shoaib - Information Theory)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question 1: Consider 2 independent integer-values random variables X and Y. Their respective entropies are $H(X)$ and $H(Y)$. The joint entropy $H(X,Y)$ of these random variables is: </p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>(a) 0</li><li>(b) 1</li><li>(c) Sum of $H(X)$ and $H(Y)$</li><li>(d) Ratio of $H(X)$ and $H(Y)$</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: (c) Sum of $H(X)$ and $H(Y)$ (since $I(X;Y)=0$ for independent variables, and $I(X;Y) = H(X)+H(Y)-H(X,Y)$).</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question: _______ is a measure of the informational distance between two probability distributions.</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>(a) Stochastic Gradient Descent</li><li>(b) Logistic Regression</li><li>(c) Linear Regression</li><li>(d) Kullback-Leibler divergence</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: (d) Kullback-Leibler divergence </p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question: The information gained from observing the combination of N independent events, whose probabilities are $p_i$ for $i=1....N$, is the _______ of the information gained from observing each one of these events separately and in any order. </p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>(a) sum</li><li>(b) product</li><li>(c) average</li><li>(d) ratio</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: (a) sum (Information is additive for independent events: $I(E_1 E_2) = -\log(p_1 p_2) = -\log p_1 - \log p_2 = I(E_1) + I(E_2)$).</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question: Polynesian languages are famous for their small alphabets. Assume a language with the following letters and relative frequencies: $p(1/8), t(1/4), k(1/8), a(1/4), i(1/8), u(1/8)$. What is the per-character entropy for this language? </p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>(a) 3/5</li><li>(b) 2/7</li><li>(c) 5/2</li><li>(d) 3/7</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary>
+                                <p>Frequencies: p=1/8, t=2/8, k=1/8, a=2/8, i=1/8, u=1/8.</p>
+                                <p>$H = - [ (1/8)\log_2(1/8) + (2/8)\log_2(2/8) + (1/8)\log_2(1/8) + (2/8)\log_2(2/8) + (1/8)\log_2(1/8) + (1/8)\log_2(1/8) ]$</p>
+                                <p>$H = - [ 4 \times (1/8)\log_2(1/8) + 2 \times (2/8)\log_2(1/4) ]$</p>
+                                <p>$H = - [ (1/2)(-3) + (1/2)(-2) ] = - [ -3/2 - 1 ] = - [-5/2] = 5/2$ bits.</p>
+                                <p>Answer: (c) $5/2$</p>
+                            </details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lectureSMS" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Mining Data Streams (Shoaib)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Motivation & Challenges</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Data Streams:</strong> Data arrives continuously, potentially infinitely, and cannot all be stored or re-scanned (e.g., sensor data, internet traffic, social media feeds).</p>
+                        <p><strong>Challenges:</strong> Limited memory, limited processing time per element, need for approximate answers.</p>
+                        <p><strong>Query Types:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Standing Queries:</strong> Predefined, processed continuously (e.g., alert if temp > 25°C).</li>
+                            <li><strong>Ad-hoc Queries:</strong> Asked once about current state, often use sliding windows (fixed number of recent items or items within a time window). </li>
+                        </ul>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Sampling from Streams</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Goal:</strong> Select a representative subset. Simple random sampling of elements might not work for queries about distinct users/items. </p>
+                        <p><strong>Solution: Sample based on a key.</strong> E.g., to sample 1/10 of users and all their queries: Hash user ID to 10 buckets, accept if hash value is (e.g.) 0. </p>
+                        <p><strong>Fixed-Size Sampling (Reservoir Sampling - related concept):</strong> If sample size is bounded by memory $t$: Hash keys to a large range $[0, B-1]$. Maintain a threshold $T$. Sample consists of elements with $h(key) \le T$. If sample exceeds memory, decrease $T$ and discard elements.</p>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Filtering Streams: Bloom Filters</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Goal:</strong> Accept/reject stream elements based on membership in a large set $S$ (e.g., allowed email addresses for spam filtering). </p>
+                        <p><strong>Bloom Filter Structure:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>A bit array of $n$ bits, initially all 0. </li>
+                            <li>$k$ independent hash functions $h_1, ..., h_k$, each mapping keys to $[0, n-1]$. </li>
+                        </ul>
+                        <p><strong>Initialization (Adding element $s \in S$):</strong> For each hash function $h_i$, set bit $h_i(s)$ to 1.</p>
+                        <p><strong>Querying (Testing element $x$):</strong> Check if all bits $h_1(x), ..., h_k(x)$ are 1.</p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>If any bit is 0: $x$ is definitely NOT in $S$ (No False Negatives).</li>
+                            <li>If all bits are 1: $x$ is POSSIBLY in $S$ (False Positives are possible). </li>
+                        </ul>
+                        <p><strong>Pros:</strong> Space-efficient, very fast. <strong>Cons:</strong> False positives, cannot easily remove elements (standard Bloom filter).</p>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Counting Distinct Elements: Flajolet-Martin Algorithm</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Goal:</strong> Estimate the number of unique elements in a stream without storing all elements.</p>
+                        <p><strong>Core Idea:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Hash each incoming stream element $a$ to a bit string $h(a)$.</li>
+                            <li>For each $h(a)$, find the "tail length" $r(h(a))$: number of trailing zeros.</li>
+                            <li>Keep track of $R = \max_{a \in stream} r(h(a))$.</li>
+                            <li>Estimate number of distinct elements as $2^R$.</li>
+                        </ul>
+                        <p><strong>Why it works (intuition):</strong> Probability of a hash value ending in $\ge r$ zeros is $2^{-r}$. If $m$ distinct elements, probability that at least one has tail length $\ge r$ is $1 - (1-2^{-r})^m$. This probability is high if $m \gg 2^r$ and low if $m \ll 2^r$. So $2^R$ is a rough estimate of $m$. </p>
+                        <p><strong>Improving Accuracy:</strong> Use multiple hash functions. Group hash functions, average $2^R$ within groups, then take the median of these group averages.</p>
+                        <p><strong>Pros:</strong> Very space-efficient (only store $R$ per hash function). <strong>Cons:</strong> Approximate.</p>
+                    </div>
+                </details>
+                <details class="bg-indigo-50 p-3 rounded-md shadow-sm mt-4">
+                    <summary class="text-lg font-semibold text-indigo-700">Revision Exercises (Shoaib - Data Streams)</summary>
+                    <div class="mt-2 space-y-3 text-gray-700">
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question: A hash function takes an input as a key, which is associated with a datum or record and used to identify it to the data storage and retrieval application.</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>(a) True</li><li>(b) False</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: (a) True</p></details>
+                        </div>
+                        <div class="exercise-box">
+                            <div class="flex items-center mb-1"> <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600 rounded mr-3 focus:ring-red-500 border-gray-300 shadow-sm flag-question-checkbox"> <p class="font-medium flex-1">Question: Flajolet-Martin Algorithm does not need to store any stream element but provides an approximate solution.</p> </div>
+                            <ul class="list-disc list-inside ml-4 mt-1"><li>(a) True</li><li>(b) False</li></ul>
+                            <details class="mt-2 answer-reveal"><summary>Show Answer</summary><p>Answer: (a) True </p></details>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lectureMLP" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Link Prediction (Markus)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Problem & Pipeline</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Goal:</strong> Given a network snapshot, predict future links or identify missing links. </p>
+                        <p><strong>Applications:</strong> Social network friend suggestions, protein interaction prediction, recommender systems. </p>
+                        <p><strong>Pipeline:</strong></p>
+                        <ol class="list-decimal list-inside ml-4">
+                            <li>Split existing edges $E$ into $E_{train}$ and $E_{test}$.</li>
+                            <li>Run link prediction algorithm on $E_{train}$ to get a ranked list $L$ of potential links from $U - E_{train}$ (U is set of all possible edges).</li>
+                            <li>Evaluate: Compare $L$ with $E_{test}$.</li>
+                        </ol>
+                        <p><strong>Performance Measures:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Precision:</strong> If top $N_L$ links are predicted, and $N_r$ are in $E_{test}$, precision = $N_r/N_L$.</li>
+                            <li><strong>AUC (Area Under ROC Curve):</strong> Probability that a randomly chosen missing link (from $E_{test}$) gets a higher score than a randomly chosen non-existent link (from $U-E$).</li>
+                        </ul>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Similarity-Based Approaches</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>Assign a similarity score $S_{xy}$ to pairs of non-connected nodes $(x,y)$. Higher score = more likely link.</p>
+                        <p><strong>Local Similarity Indices (based on common neighbors $\Gamma(x)$):</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Common Neighbors:</strong> $S_{xy}^{CN} = |\Gamma(x) \cap \Gamma(y)| = (A^2)_{xy}$ (where A is adjacency matrix). </li>
+                            <li><strong>Jaccard Index:</strong> $S_{xy}^{Jaccard} = \frac{|\Gamma(x) \cap \Gamma(y)|}{|\Gamma(x) \cup \Gamma(y)|}$</li>
+                            <li><strong>Adamic-Adar Index:</strong> $S_{xy}^{AA} = \sum_{z \in \Gamma(x) \cap \Gamma(y)} \frac{1}{\log k_z}$ (common neighbors with low degree $k_z$ are more significant).</li>
+                            <li><strong>Resource Allocation (RA):</strong> $S_{xy}^{RA} = \sum_{z \in \Gamma(x) \cap \Gamma(y)} \frac{1}{k_z}$</li>
+                        </ul>
+                        <p><strong>Global Similarity Indices (consider all paths):</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Katz Index:</strong> Sum over all paths, exponentially damped by length: $S_{xy} = \sum_{l=1}^{\infty} \beta^l \cdot |\text{paths}_l(x,y)| = (\ (I - \beta A)^{-1} - I\ )_{xy}$.</li>
+                            <li>Matrix Exponential: $S_{xy} = (exp(\alpha A))_{xy} = \sum_{i=0}^{\infty} \frac{\alpha^i}{i!} (A^i)_{xy}$.</li>
+                            <li>Shortest Path Distance (inverse): $S_{xy} = 1/d(x,y)$.</li>
+                        </ul>
+                        <p><strong>For Bipartite Graphs:</strong> Use odd powers of A (e.g., $A^3$) or functions like $\sinh(\alpha A)$.</p>
+                        <p><strong>Link Prediction as Regression:</strong> Predict target adjacency matrix $A_{target}$ from $A_{source}$ by minimizing $||F(A_{source}) - A_{target}||$. If $A=U\Lambda U^T$, then $F(A)=UF(\Lambda)U^T$. </p>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Maximum Likelihood Estimation (MLE) Based Approaches</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>Assume a probabilistic model of graph generation, use MLE to find parameters.</p>
+                        <p><strong>Hierarchical Models:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Assume network has a hierarchical structure (dendrogram D). </li>
+                            <li>Probability of link $(x,y)$ depends on their lowest common ancestor $r$ in D, $p_r$.</li>
+                            <li>Likelihood: $\mathcal{L}(D, \{p_r\}) = \prod_r p_r^{E_r} (1-p_r)^{L_r R_r - E_r}$. MLE for $p_r^* = E_r / (L_r R_r)$.</li>
+                            <li>Sample many dendrograms, average $p_{ij}$ to rank potential links.</li>
+                        </ul>
+                        <p><strong>Stochastic Block Models (SBM):</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Nodes partitioned into groups $M$. Link probability $Q_{\alpha\beta}$ depends on groups $\alpha, \beta$ of nodes. </p>
+                            <li>Likelihood: $\mathcal{L}(A|M) = \prod_{\alpha \le \beta} Q_{\alpha\beta}^{l_{\alpha\beta}}(1-Q_{\alpha\beta})^{r_{\alpha\beta}-l_{\alpha\beta}}$. MLE for $Q_{\alpha\beta}^* = l_{\alpha\beta}/r_{\alpha\beta}$.</li>
+                            <li>Reliability of a link $R_{xy}$ is estimated by averaging over possible partitions.</li>
+                        </ul>
+                        <p><strong>Pros of MLE-based:</strong> Can give better performance, uncover structural info. <strong>Cons:</strong> Often very slow for large networks.</p>
+                        <p><strong>Challenges:</strong> Cold start (new nodes), temporal networks, different link types.</p>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lectureMCD" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">Community Detection (Markus)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Motivation & Modularity</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Community:</strong> Group of nodes more densely connected among themselves than to the rest of the network.</p>
+                        <p><strong>Modularity (Q):</strong> Measures the strength of division of a network into modules (communities). Compares the number of edges within communities to the expected number in a random network with the same degree sequence.</p>
+                        <div class="math-formula">$$Q = \frac{1}{2L} \sum_{v,w} \left( A_{vw} - \frac{k_v k_w}{2L} \right) \delta(c_v, c_w)$$</div>
+                        <p>Where $L$ is total edges, $A_{vw}$ is adjacency matrix, $k_v$ is degree of node $v$, $c_v$ is community of $v$, and $\delta(c_v, c_w)=1$ if $c_v=c_w$, else 0. Values typically range [-0.5, 1]. Higher Q indicates stronger community structure.</p>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Algorithms</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>Standard clustering (K-Means, Hierarchical) might not work well directly on adjacency if distance isn't well-defined for networks. </p>
+                        <p><strong>Louvain Method:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Greedy, heuristic method to maximize modularity. Fast and widely used.</li>
+                            <li><strong>Phase 1 (Local Reassignment):</strong> Each node initially in its own community. Iteratively move nodes to neighbor communities if it increases modularity. Repeat until no improvement. </li>
+                            <li><strong>Phase 2 (Renormalization):</strong> Communities from Phase 1 become new "super-nodes". Build a new network where links are weighted by inter-community connections. Repeat Phase 1 on this new network.</li>
+                            <li>Iterate phases until modularity cannot be improved further.</li>
+                        </ul>
+                        <p><strong>Girvan-Newman Algorithm (Edge Betweenness based):</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Edge Betweenness:</strong> Number of shortest paths between all pairs of nodes that pass through an edge. Edges connecting communities tend to have high betweenness. </li>
+                            <li><strong>Algorithm:</strong>
+                                <ol class="list-decimal list-inside ml-2">
+                                    <li>Calculate betweenness for all edges.</li>
+                                    <li>Remove edge with highest betweenness.</li>
+                                    <li>Recalculate betweenness for remaining edges.</li>
+                                    <li>Repeat until desired number of communities (or no edges left). Produces a dendrogram.</li>
+                                </ol>
+                            </li>
+                            <li><strong>Cons:</strong> Computationally expensive due to betweenness recalculation.</li>
+                        </ul>
+                        <p><strong>Spectral Partitioning / Clustering:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Uses eigenvectors of the Laplacian matrix (or Modularity matrix).</li>
+                            <li><strong>Laplacian Matrix (L):</strong> $L = D - A$, where $D$ is diagonal degree matrix, $A$ is adjacency matrix. ($L_{ii} = k_i$, $L_{ij} = -1$ if $(i,j)$ is an edge, 0 otherwise).</li>
+                            <li>Goal is to minimize "cut size" $R = 1/4 \sum_{i,j} (k_i \delta_{ij} - A_{ij})s_i s_j = 1/4 s^T L s$, where $s_i = \pm 1$ indicates group membership.</li>
+                            <li>The eigenvector corresponding to the second smallest eigenvalue of L (the Fiedler vector $v_2$) is used to partition nodes (e.g., by sign of its components). </li>
+                            <li><strong>Modularity Partitioning:</strong> Uses eigenvectors of the Modularity Matrix $B_{vw} = A_{vw} - \frac{k_v k_w}{2L}$. Divide based on signs of components of the eigenvector corresponding to the largest eigenvalue of B.</li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+
+            <div id="lectureMPR" class="content-section space-y-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-700 border-b pb-2">PageRank (Markus)</h2>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">Core Idea & Centrality Measures</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p><strong>Goal:</strong> Rank importance of web pages (or nodes in any network) by exploiting link structure. Links are endorsements. </p>
+                        <p><strong>Centrality Measures:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Degree Centrality:</strong> Importance = number of incoming links (in-degree). Simple but can be misleading.</li>
+                            <li><strong>Eigenvector Centrality:</strong> Score "centrality points" for being connected to important nodes. $x_i = \frac{1}{\lambda} \sum_j A_{ji} x_j$, or $Ax = \lambda x$. Centrality is the principal eigenvector of A. Problematic for directed graphs with sinks/disconnected components. </li>
+                            <li><strong>Katz Centrality:</strong> Every node gets some base centrality $\beta$. $x_i = \alpha \sum_j A_{ji} x_j + \beta$. Solves some issues of eigenvector centrality. $x = (I - \alpha A)^{-1} \beta \mathbf{1}$. Problem: High centrality nodes pass on high centrality to all out-links. </li>
+                        </ul>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">PageRank Algorithm</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>Overcomes Katz problem by dividing a node's passed-on rank by its out-degree $k_j^{out}$.</p>
+                        <div class="math-formula">$$PR(i) = (1-\alpha) \frac{1}{N} + \alpha \sum_{j \text{ links to } i} \frac{PR(j)}{k_j^{out}}$$</div>
+                        <p>(The lecture slides use $x_i = \alpha \sum_j A_{ji} x_j / k_j^{out} + \beta$. With $\beta = (1-\alpha)/N$ and $A_{ji}$ meaning j links to i, this is similar.)</p>
+                        <p>The term $(1-\alpha)\frac{1}{N}$ (or $(1-\alpha)\beta_i$) represents a "teleportation" or "random jump" factor, where $\alpha$ is the damping factor (typically ~0.85).</p>
+                        <p><strong>Interpretation as Random Walk:</strong> PageRank of a page is the probability that a random surfer, who clicks links at random and occasionally jumps to a random page, will be at that page.</p>
+                        <p><strong>Calculation:</strong> Iterative power method: $x^{(t+1)}_i = \alpha\sum_{j}A_{ji}x_j^{(t)}/k_{j}^{out}+(1-\alpha)/N$.</p>
+                        <p><strong>Pros:</strong> Robust to simple spam, global measure. <strong>Cons:</strong> Favors older pages, vulnerable to sophisticated link farms, topic drift.</p>
+                    </div>
+                </details>
+                <details class="bg-gray-50 p-3 rounded-md shadow-sm">
+                    <summary class="text-xl font-semibold text-gray-600">HITS Algorithm (Hyperlink-Induced Topic Search)</summary>
+                    <div class="mt-2 space-y-2 text-gray-700">
+                        <p>Assigns two scores to each page: Authority and Hub.</p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Authority:</strong> A page with good information on a topic.</li>
+                            <li><strong>Hub:</strong> A page that links to many good authorities.</li>
+                        </ul>
+                        <p><strong>Iterative Update:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Authority update: $a_{t+1}(v) = \sum_{y \text{ points to } v} h_{t}(y)$ (good authorities are pointed to by good hubs).</li>
+                            <li>Hub update: $h_{t+1}(v) = \sum_{v \text{ points to } y} a_{t}(y)$ (good hubs point to good authorities).</li>
+                            <li>Scores are normalized after each iteration.</li>
+                        </ul>
+                        <p><strong>Process:</strong> For a query, get a root set of pages. Expand to a base set (pages linked from/to root set). Run HITS on base set.</p>
+                        <p><strong>Pros:</strong> Query-dependent. <strong>Cons:</strong> Slow (query-time), easily spammed (easy to create out-links), topic drift.</p>
+                    </div>
+                </details>
+            </div>
+
+            <div id="welcome-message" class="content-section active bg-white p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-4xl font-bold text-gray-700 mb-4">Welcome to the Data Mining Study Guide!</h2>
+                <p class="text-lg text-gray-600">Select a topic from the sidebar to get started or use the 'Toggle All Details' button.</p>
+                <p class="mt-6 text-sm text-gray-500">This guide is based on the provided lecture materials for COMP6237.</p>
+            </div>
+
+             <button id="scrollTopBtn" title="Go to top"
+                    class="hidden fixed bottom-5 right-5 bg-gray-700 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-full shadow-lg transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                </svg>
+            </button>
+
+        </main>
+    </div>
+
+    <script>
+        // JavaScript for navigation and active states
+        const navLinks = document.querySelectorAll('.nav-link');
+        const contentSections = document.querySelectorAll('.content-section');
+        const sidebar = document.getElementById('sidebar');
+        const menuButton = document.getElementById('menu-button');
+        const mainContent = document.querySelector('main'); // For scroll listening
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        const toggleAllButton = document.getElementById('toggle-all-details');
+        let allDetailsOpen = false;
+
+        function setActiveSection(targetId) {
+            contentSections.forEach(section => {
+                if (section.id === targetId) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+            if (mainContent) {
+                mainContent.scrollTop = 0;
+            }
+             // Reset allDetailsOpen state when changing sections
+            allDetailsOpen = false;
+            toggleAllButton.textContent = 'Expand All Sections';
+            // Ensure details within the newly active section respect their individual open/closed state
+            // unless the global toggle was just used to open them.
+            // This part is tricky if we want to preserve individual states after a global toggle.
+            // For simplicity, we can just ensure they are closed by default when a section becomes active,
+            // or let the user's toggle handle it.
+            // The user added their own toggle, so we'll respect that.
+            // If we want all sections to be initially collapsed:
+            // document.querySelectorAll('.content-section.active details').forEach(detail => detail.removeAttribute('open'));
+        }
+        
+        let initialTarget = 'welcome-message'; 
+        if (window.location.hash) {
+            const hashTarget = window.location.hash.substring(1);
+            const targetElement = document.getElementById(hashTarget);
+            if (targetElement && targetElement.classList.contains('content-section')) {
+                initialTarget = hashTarget;
+            }
+        }
+        setActiveSection(initialTarget);
+
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                setActiveSection(targetId);
+                window.location.hash = targetId;
+                navLinks.forEach(navLink => navLink.classList.remove('bg-gray-600', 'font-semibold'));
+                link.classList.add('bg-gray-600', 'font-semibold');
+                if (window.innerWidth < 768) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        });
+        
+        if (window.location.hash) {
+            const currentHash = window.location.hash.substring(1);
+            const currentLink = document.querySelector(`.nav-link[data-target="${currentHash}"]`);
+            if (currentLink) {
+                navLinks.forEach(navLink => navLink.classList.remove('bg-gray-600', 'font-semibold'));
+                currentLink.classList.add('bg-gray-600', 'font-semibold');
+            }
+        }
+
+        menuButton.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (event) => {
+            if (window.innerWidth < 768 && sidebar.classList.contains('open')) {
+                const isClickInsideSidebar = sidebar.contains(event.target);
+                const isClickOnMenuButton = menuButton.contains(event.target);
+                if (!isClickInsideSidebar && !isClickOnMenuButton) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        if (mainContent && scrollTopBtn) {
+            mainContent.onscroll = function() {scrollFunction()};
+            function scrollFunction() {
+              if (mainContent.scrollTop > 200) { 
+                scrollTopBtn.style.display = "block";
+              } else {
+                scrollTopBtn.style.display = "none";
+              }
+            }
+            scrollTopBtn.addEventListener('click', () => {
+                mainContent.scrollTop = 0; 
+            });
+        }
+        
+        // User mentioned they added a toggle for all details, so I'll implement one
+        // that works within the currently active content section.
+        if (toggleAllButton) {
+            toggleAllButton.addEventListener('click', () => {
+                const activeContentSection = document.querySelector('.content-section.active');
+                if (activeContentSection) {
+                    const detailsElements = activeContentSection.querySelectorAll('details');
+                    allDetailsOpen = !allDetailsOpen; // Toggle state
+                    detailsElements.forEach(detail => {
+                        if (allDetailsOpen) {
+                            detail.setAttribute('open', '');
+                        } else {
+                            detail.removeAttribute('open');
+                        }
+                    });
+                    toggleAllButton.textContent = allDetailsOpen ? 'Collapse All Sections' : 'Expand All Sections';
+                }
+            });
+        }
+
+
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                tags: 'ams' 
+            },
+            chtml: {
+                scale: 0.95, 
+                mtextInheritFont: true
+            },
+            svg: {
+                fontCache: 'global'
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+</body>
+</html>
